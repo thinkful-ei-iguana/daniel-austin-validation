@@ -7,7 +7,10 @@ import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
 import ApiContext from '../ApiContext';
 import config from '../config';
+import NotefulForm from '../NotefulForm/NotefulForm';
+
 import './App.css';
+import AddFolder from '../AddFolder';
 
 class App extends Component {
     state = {
@@ -42,6 +45,29 @@ class App extends Component {
         });
     };
 
+    handleAddFolder = event => {
+        event.preventDefault();
+        event.persist();
+        
+        fetch(`${config.API_ENDPOINT}/folders`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name: event.target.folderName.value})
+        }).then(res => {
+            if (res.ok) return res.json();
+            else throw new Error('Error, folder cannot be created');
+            
+        }).then(folder => {
+            this.setState({folders: [...this.state.folders, folder ]});
+        }).catch(err => {
+            console.log(err.message);
+        })
+        
+    }
+
     renderNavRoutes() {
         return (
             <>
@@ -72,6 +98,13 @@ class App extends Component {
                     />
                 ))}
                 <Route path="/note/:noteId" component={NotePageMain} />
+                <Route path="/add-folder" render={(props) => (
+                    <NotefulForm 
+                        {...props} 
+                        children={AddFolder}
+                        addFolder={this.handleAddFolder}
+                    /> 
+                )}/>
             </>
         );
     }

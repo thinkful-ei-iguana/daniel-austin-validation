@@ -1,13 +1,27 @@
-import React from 'react'
-import './NotefulForm.css'
+import React from 'react';
+import './NotefulForm.css';
+import { withRouter } from 'react-router-dom';
 
-export default function NotefulForm(props) {
-  const { className, ...otherProps } = props
+function NotefulForm(props) {
+  const { className, addFolder } = props
+  const Imputs = props.children
+  
+
   return (
-    <form
-      className={['Noteful-form', className].join(' ')}
-      action='#'
-      {...otherProps}
-    />
+    <>
+      <form
+        onSubmit={e => addFolder(e)}
+        className={['Noteful-form', className].join(' ')}
+        action='#'
+      >
+        <Imputs />
+        <button type="submit">
+            Submit
+        </button>
+      </form>
+      
+    </>
   )
 }
+
+export default withRouter(NotefulForm);
