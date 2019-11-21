@@ -9,11 +9,12 @@ export default class AddNote extends Component {
     const { folders } = this.context;
 
     return (
-      <fieldset>
+      <div>
         <label htmlFor="noteName" >Note Name</label>
         <input type="text" name="noteName" id="noteName" required/>
         <label htmlFor="noteContent">Content</label>
         <input type="text" name='noteContent' id='noteContent' />
+        <label htmlFor="folderSelect">Folder</label>
         <select name="folderSelect" id="folderSelect">
           {folders.map(folder => {
             return (
@@ -23,7 +24,7 @@ export default class AddNote extends Component {
             );
           })}
         </select>
-      </fieldset>
+      </div>
     );
   }
 }

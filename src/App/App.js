@@ -12,6 +12,7 @@ import './App.css';
 import AddFolder from '../AddFolder';
 import AddNote from '../AddNote';
 import ErrorBoundary from '../ErrorBoundary';
+import { withRouter } from 'react-router-dom';
 
 
 class App extends Component {
@@ -61,8 +62,8 @@ class App extends Component {
     }).then(res => {
       if (res.ok) return res.json();
       else throw new Error('Error, folder cannot be created');
-
     }).then(folder => {
+      this.props.history.push(`/`)
       this.setState({ folders: [...this.state.folders, folder] });
     }).catch(err => {
       console.log(err.message);
@@ -89,6 +90,7 @@ class App extends Component {
       if (res.ok) return res.json();
       else throw new Error('Error, note cannot be created');
     }).then(note => {
+      this.props.history.push(`/folder/${note.folderId}`)
       this.setState({ notes: [...this.state.notes, note] });
     }).catch(err => {
       console.log(err.message);
@@ -168,4 +170,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

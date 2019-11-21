@@ -4,11 +4,11 @@ export default class AddFolder extends Component {
 
   render() {
     return (
-      <fieldset>
+      <div>
         <label htmlFor="folderName">Folder Name</label>
         <input type="text" name="folderName" id="folderName"/>
         
-      </fieldset>
+      </div>
     );
   }
 }
