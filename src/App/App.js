@@ -8,9 +8,9 @@ import NotePageMain from '../NotePageMain/NotePageMain';
 import ApiContext from '../ApiContext';
 import config from '../config';
 import NotefulForm from '../NotefulForm/NotefulForm';
-
 import './App.css';
 import AddFolder from '../AddFolder';
+import AddNote from '../AddNote';
 
 class App extends Component {
     state = {
@@ -48,7 +48,7 @@ class App extends Component {
     handleAddFolder = event => {
         event.preventDefault();
         event.persist();
-        
+
         fetch(`${config.API_ENDPOINT}/folders`, {
             method: 'POST',
             headers: {
@@ -64,8 +64,31 @@ class App extends Component {
             this.setState({folders: [...this.state.folders, folder ]});
         }).catch(err => {
             console.log(err.message);
-        })
-        
+        });   
+    }
+
+    handleAddNote = event => {
+        event.preventDefault();
+        event.persist();
+
+        fetch(`${config.API_ENDPOINT}/notes`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: event.target.noteName.value,
+                modified: Date.now()
+            })
+        }).then(res => {
+            if (res.ok) return res.json();
+            else throw new Error('Error, note cannot be created');
+        }).then(note => {
+            this.setState({notes: [...this.state.notes, note ]});
+        }).catch(err => {
+            console.log(err.message);
+        })    
     }
 
     renderNavRoutes() {
@@ -102,8 +125,15 @@ class App extends Component {
                     <NotefulForm 
                         {...props} 
                         children={AddFolder}
-                        addFolder={this.handleAddFolder}
+                        onSubmit={this.handleAddFolder}
                     /> 
+                )}/>
+                <Route path="/add-note" render={(props) => (
+                    <NotefulForm
+                        {...props}
+                        children={AddNote}
+                        onSubmit={this.handleAddNote}
+                    />
                 )}/>
             </>
         );

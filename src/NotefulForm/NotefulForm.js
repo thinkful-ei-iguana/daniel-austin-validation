@@ -3,14 +3,14 @@ import './NotefulForm.css';
 import { withRouter } from 'react-router-dom';
 
 function NotefulForm(props) {
-  const { className, addFolder } = props
-  const Imputs = props.children
+  const { className, onSubmit } = props;
+  const Imputs = props.children;
   
 
   return (
     <>
       <form
-        onSubmit={e => addFolder(e)}
+        onSubmit={e => onSubmit(e)}
         className={['Noteful-form', className].join(' ')}
         action='#'
       >
