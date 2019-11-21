@@ -1,6 +1,7 @@
 import React from 'react';
 import './NotefulForm.css';
 import { withRouter } from 'react-router-dom';
+import propTypes from 'prop-types';
 
 function NotefulForm(props) {
   const { className, onSubmit } = props;
@@ -25,3 +26,8 @@ function NotefulForm(props) {
 }
 
 export default withRouter(NotefulForm);
+
+NotefulForm.propTypes = {
+  className: propTypes.string,
+  onSubmit: propTypes.func
+}

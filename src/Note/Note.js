@@ -70,8 +70,11 @@ export default class Note extends React.Component {
   }
 }
 Note.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
   main: PropTypes.string,
-  modified: PropTypes.string,
-  onDeleteNote: PropTypes.function
+  modified: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]) ,
+  onDeleteNote: PropTypes.func
 }
