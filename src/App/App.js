@@ -13,6 +13,7 @@ import AddFolder from '../AddFolder';
 import AddNote from '../AddNote';
 import ErrorBoundary from '../ErrorBoundary';
 
+
 class App extends Component {
   state = {
     notes: [],
